@@ -32,6 +32,7 @@ class ArticlesController < ApplicationController
   def destroy
     @article = Article.find(params[:id])
     @article.destroy
+    ArticleTag.where(article_id: params[:id]).destroy_all
 
     flash.notice = "Article '#{@article.title}' Deleted"
 
@@ -41,6 +42,6 @@ class ArticlesController < ApplicationController
   private
 
   def article_params
-    params.require(:article).permit(:title, :body)
+    params.require(:article).permit(:title, :body, :tag_list)
   end
 end
